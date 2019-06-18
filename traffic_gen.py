@@ -31,9 +31,9 @@ def PoissonDistribution(size=1000, lambd=1.0, hist_partitions=30): #num samples,
 supportedDistributions = {
 	"Pareto"     : {"seed": 0, "generatorFunction": ParetoDistribution },
 	"Poisson"    : {"seed": 0, "generatorFunction": PoissonDistribution},
-	"Uniform"    : {"seed": 0, "generatorFunction": random.uniform     },
-	"Gaussian"   : {"seed": 0, "generatorFunction": random.normal      },
-	"Exponential": {"seed": 0, "generatorFunction": random.exponential }
+	#"Uniform"    : {"seed": 0, "generatorFunction": random.uniform     },
+	#"Gaussian"   : {"seed": 0, "generatorFunction": random.normal      },
+	#"Exponential": {"seed": 0, "generatorFunction": random.exponential }
 }
 
 
