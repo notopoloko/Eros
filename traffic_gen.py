@@ -3,6 +3,7 @@ import sys
 import numpy 
 import numpy.random as random
 import matplotlib.pyplot as plt
+import json
 
 sys.path.append(os.path.dirname(__name__))
 
@@ -36,6 +37,8 @@ supportedDistributions = {
 	#"Exponential": {"seed": 0, "generatorFunction": random.exponential }
 }
 
+userTrafficWorkloads = {}
+userGeneratedTrafficWorkloads = {}
 
 ########################################## Prepare distribution images ##############################################
 for distribution in list(supportedDistributions.keys()):
@@ -61,18 +64,41 @@ for distribution in list(supportedDistributions.keys()):
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+app.debug = True
+
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    return render_template('index.html', availableDistributions = list(supportedDistributions.keys()), userTrafficWorkloads = userTrafficWorkloads)
 
+
+@app.route("/distribution")
 @app.route("/distribution/")
 @app.route("/distribution/<distribution_name>")
 def distribution(distribution_name=""):
 	if distribution_name in list(supportedDistributions.keys()):
 		return render_template("distribution.html", distribution_image_path="static/"+distribution_name+".jpg")
 	else:
-		return ("",200)
+		return "", 200
+
+
+@app.route("/addTrafficWorkload/", methods=["POST"])
+def addTrafficWorkload():
+	val = request.get_data()
+	trafficWorkloadParameters = json.loads(val)
+
+	userTrafficWorkloads[len(userTrafficWorkloads)] = trafficWorkloadParameters
+	return "", 200
+
+
+@app.route("/generateTrafficWorkload/")
+def generateTrafficWorkload():
+
+	for workload in userTrafficWorkloads:
+		userGeneratedTrafficWorkloads[workload] = 0
+	return json.dumps(userGeneratedTrafficWorkloads, indent=4), 200
+
+
 
 app.run()
 ########################################## End Web server ##############################################

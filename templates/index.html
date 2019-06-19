@@ -16,8 +16,8 @@
 <!-- Don't forget to add it after jQuery and Bootstrap -->
 <script src="https://cdn.jsdelivr.net/gh/routekick/bootstrap-modal-wizard@1.0.0/dist/jquery.modal-wizard.min.js"></script>
 
-<script src="http://www.skulpt.org/js/skulpt.min.js" type="text/javascript"></script> 
-<script src="http://www.skulpt.org/js/skulpt-stdlib.js" type="text/javascript"></script> 
+<!--script src="http://www.skulpt.org/js/skulpt.min.js" type="text/javascript"></script-->
+<!--script src="http://www.skulpt.org/js/skulpt-stdlib.js" type="text/javascript"></script-->
 
 <!--
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
@@ -29,46 +29,9 @@
 
 <body> 
 
-<script type="text/javascript"> 
-// output functions are configurable.  This one just appends some text
-// to a pre element.
-function outf(text) { 
-    var mypre = document.getElementById("output"); 
-    mypre.innerHTML = mypre.innerHTML + text; 
-} 
-function builtinRead(x) {
-    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-            throw "File not found: '" + x + "'";
-    return Sk.builtinFiles["files"][x];
-}
-
-// Here's everything you need to run a python program in skulpt
-// grab the code from your textarea
-// get a reference to your pre element for output
-// configure the output function
-// call Sk.importMainWithBody()
-function runit() { 
-   var prog = document.getElementById("pythonTrafficGeneratorCode").value; 
-   var mypre = document.getElementById("output"); 
-   mypre.innerHTML = ''; 
-   Sk.pre = "output";
-   Sk.configure({output:outf, read:builtinRead}); 
-   (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
-   var myPromise = Sk.misceval.asyncToPromise(function() {
-       return Sk.importMainWithBody("<stdin>", false, prog, true);
-   });
-   myPromise.then(function(mod) {
-       console.log('success');
-   },
-       function(err) {
-       console.log(err.toString());
-   });
-} 
-
-// Custom interface to collect form input, send to skupt to process and plot results
-function prepareInterface(){
-
-}
+<script type="text/javascript">
+var newTrafficWorkload = {};
+var generatedTrafficWorkload = "{}";
 
 function httpGet(theUrl)
 {
@@ -78,22 +41,43 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-function updateDistImage(){
+function httpPost(theUrl, dataJson)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
+    xmlHttp.send( dataJson );
+    return xmlHttp.responseText;
+}
+
+function updateDistImage()
+{
+  //Fetch and print the image with the proper distribution
   $("#distributionImage").html(httpGet("/distribution/"+$("#distributionSelector").val()));
 }
 
+function addTrafficWorkload(){
+  //Send json with workload info to the server
+  httpPost("/addTrafficWorkload/", JSON.stringify(newTrafficWorkload));
+  newTrafficWorkload = {};
+}
+
+function generateTrafficWorkload(){
+  //Generate json with traffic workload
+  generatedTrafficWorkload = httpGet("/generateTrafficWorkload/");
+}
+
+function downloadTrafficWorkload(){
+  //Download the traffic file
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(generatedTrafficWorkload));
+  element.setAttribute('download', "generatedTraffic.json");
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
 </script> 
 
-
-
-<textarea id="pythonTrafficGeneratorCode" cols="40" rows="10" hidden blocked>
-import turtle
-
-t = turtle.Turtle()
-t.forward(100)
-
-print "Hello World" 
-</textarea>
 
 
 <div class="container-fluid">
@@ -125,6 +109,14 @@ print "Hello World"
                   </tr>
                 </thead>
                 <tbody>
+                  {% for keyUserTrafficWorkload, valueUserTrafficWorkload in userTrafficWorkloads.items() %}
+                    <tr>
+                      <td>{{keyUserTrafficWorkload}}</td>
+                      {% for key, value in valueUserTrafficWorkload.items() %}
+                        <td>{{value}}</td>
+                      {% endfor %}
+                    </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
@@ -134,8 +126,8 @@ print "Hello World"
       <div class="row-md-12">
         <div class="col-md-12">   
           <div class="btn-group" role="group">
-          <button type="button" class="btn btn-success" onclick="runit()">Generate traffic</button> 
-          <button type="button" class="btn btn-info"    onclick="saveit()">Save generated traffic</button> 
+          <button type="button" class="btn btn-success" onclick="generateTrafficWorkload()">Generate traffic</button>
+          <button type="button" class="btn btn-info"    onclick="downloadTrafficWorkload()">Save generated traffic</button>
           </div>
         </div>
       </div>
@@ -167,11 +159,9 @@ print "Hello World"
                 <label for="sel1">Select a distribution:</label>
                 <select class="form-control" onchange="updateDistImage()" id="distributionSelector">
                   <option></option>
-                  <option>Pareto</option>
-                  <option>Poisson</option>
-                  <option>Exponential</option>
-                  <option>Gaussian</option>
-                  <option>Uniform</option>
+                  {% for distribution in availableDistributions %}
+                  <option>{{distribution}}</option>
+                  {% endfor %}
                 </select>
                 <div id="distributionImage"></div>
               </div>
@@ -187,7 +177,7 @@ print "Hello World"
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-info" data-step-to="prev">Previous</button>
             <button type="button" class="btn btn-success" data-step-to="next">Next</button>
-            <input type="submit" class="btn btn-success" data-submit value="Submit">
+            <input type="submit" class="btn btn-success" data-submit onclick="addTrafficWorkload()" value="Submit">
           </div>
         </form>
       </div>
