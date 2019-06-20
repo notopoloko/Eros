@@ -25,6 +25,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
 -->
 
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
 </head> 
 
 <body> 
@@ -75,6 +78,18 @@ function downloadTrafficWorkload(){
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
+}
+
+function plotScatter(x_list,y_list,divName){
+  var data = [
+    {
+      x: x_list,
+      y: y_list,
+      type: 'scatter'
+    }
+  ];
+
+  Plotly.newPlot(divName, data, {}, {showSendToCloud: true});
 }
 </script> 
 
