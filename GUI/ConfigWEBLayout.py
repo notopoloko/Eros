@@ -8,11 +8,11 @@ from hurst import compute_Hc
 
 from charge_generator import web_charge, voip_charge, video_stream_charge
 from traffic_analyser import voip_analyser, video_stream_analyser, web_analyser
+from GUI.ConfigLayout import ConfigLayout
 
-class ConfigWEBLayout(object):
+class ConfigWEBLayout(ConfigLayout):
     def __init__(self, uiMainWindow):
-        self.uiMainWindow = uiMainWindow
-        self.canvasX = None
+        super().__init__(uiMainWindow)
 
     def functText(self, texto =''):
         print('Uma mensagem de teste: ' + texto)
@@ -59,36 +59,13 @@ class ConfigWEBLayout(object):
             # self.uiMainWindow.comboBox_2.setCurrentIndex(1)
             self.uiMainWindow.numeroCargaWEB.setCurrentIndex(0)
             # plotar no canvas
-            self.plotOnCanvas(pointsToPlot)
+            self.plotOnCanvas(self.uiMainWindow.webPlotLayout, pointsToPlot, 'Plot WEB')
             self.uiMainWindow.widgetWEB.setVisible(True)
             self.mostraStatWEB(pointsToPlot)
             # canvasX.set_xlabel('Segundos')
             # canvasX.set_ylabel('Kbps')
         except ValueError as e:
             self.functText(str(e))
-
-    def plotOnCanvas( self, pointsToPlot, xLabel = 'Segundos', yLabel = 'bytes' ):
-        if self.canvasX is None:
-            canvas = backQt5.FigureCanvasQTAgg(Figure((5,3)))
-            navi_bar = NavigationToolbar( canvas, self.uiMainWindow.widgetWEB )
-
-            self.uiMainWindow.webPlotLayout.addWidget(canvas)
-            self.uiMainWindow.webPlotLayout.addWidget(navi_bar)
-
-            self.canvasX = canvas.figure.subplots()
-            self.canvasX.set_title( 'Plot WEB' )
-        else:
-            self.canvasX.clear()
-            # self.uiMainWindow.webPlotLayout.removeItem( self.uiMainWindow.webPlotLayout.itemAt(1) )
-            # self.uiMainWindow.webPlotLayout.removeItem( self.uiMainWindow.webPlotLayout.itemAt(0) )
-
-        t = np.linspace(0, len(pointsToPlot) - 1, len(pointsToPlot))
-        self.canvasX.vlines( t, [0] , pointsToPlot, colors='red')
-
-        self.canvasX.set_xlabel( xLabel )
-        self.canvasX.set_ylabel( yLabel )
-        self.canvasX.axis(ymax = max( pointsToPlot ) *4/3)
-        self.canvasX.figure.canvas.draw()
 
     def mudarEscalaPlot( self, comboIndex ):
         a = [ 10, 1, 1/60 ]
@@ -97,7 +74,7 @@ class ConfigWEBLayout(object):
         # Problema quando a escala é alterada
         pointsToPlot = voip_analyser(a[comboIndex], self.uiMainWindow.comboBox.currentIndex())
 
-        self.plotOnCanvas( pointsToPlot, xLabel[comboIndex] )
+        self.plotOnCanvas(self.uiMainWindow.webPlotLayout, pointsToPlot, 'Plot WEB', xLabel[comboIndex] )
 
         self.uiMainWindow.widgetVoIPPlot.setVisible(True)
         self.mostraStatWEB( pointsToPlot)
@@ -105,7 +82,7 @@ class ConfigWEBLayout(object):
     def mudaPlot(self, comboIndex):
         # self.uiMainWindow.comboBox_2.setCurrentIndex(1)
         pointsToPlot = web_analyser(comboIndex)
-        self.plotOnCanvas(pointsToPlot)
+        self.plotOnCanvas(self.uiMainWindow.webPlotLayout, pointsToPlot, 'Plot WEB')
         self.mostraStatWEB(pointsToPlot)
 
     def configWEBTabLayout(self):

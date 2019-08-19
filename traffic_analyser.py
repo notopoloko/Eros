@@ -34,6 +34,9 @@ def video_stream_analyser(escala, chargeNumber = 0):
     # f.close()
     return averageRate
 
+# TODO
+def video_stream_total_analyser():
+    pass
 
 def voip_analyser(escala, chargeNumber=0):
     packet_size = 0
@@ -44,9 +47,10 @@ def voip_analyser(escala, chargeNumber=0):
             data = json.load(voipJsonFile)
             packet_size = data[chargeNumber]['packet_size']
             sequenceOfPackets = data[chargeNumber]['time_between_packets']
+            voipJsonFile.close()
 
-            for i in range(1, len(sequenceOfPackets)):
-                sequenceOfPackets[i] = sequenceOfPackets[i] + sequenceOfPackets[i-1]
+        for i in range(1, len(sequenceOfPackets)):
+            sequenceOfPackets[i] = sequenceOfPackets[i] + sequenceOfPackets[i-1]
     except IOError:
         print('Não há arquivo voip_charge.json no diretório')
 
@@ -60,14 +64,25 @@ def voip_analyser(escala, chargeNumber=0):
     # f.close()
     return averageRate
 
+# TODO
+def voip_total_analyser():
+    pass
+
 # Tráfego gerado em segundos
 def web_analyser(chargeNumber = 0):
+    pointsToPlot = []
     try:
         with open('./Charges/web_charge.json') as webJsonFile:
             data = json.load(webJsonFile)
-            return data[chargeNumber]['series']
+            pointsToPlot = data[chargeNumber]['series']
+            webJsonFile.close()
+        return pointsToPlot
     except IOError:
         print('Não há arquivo web_charge.json no diretório')
+
+# TODO
+def web_total_analyser():
+    pass
 
 # Trafego gerado em minutos
 def IOT_analyser( escala, chargeNumber = 0 ):
@@ -78,8 +93,10 @@ def IOT_analyser( escala, chargeNumber = 0 ):
             charge = json.load(iotJsonFile) [chargeNumber]
             packet_size = charge['packet_size']
             time_to_send = charge['time_to_send']
+            iotJsonFile.close()
     except IOError:
         print('Não há arquivo IOT_charge.json no diretório')
+        return
 
     for i in range(1, len(time_to_send)):
         time_to_send[i] = time_to_send[i] + time_to_send[i-1]
@@ -90,4 +107,6 @@ def IOT_analyser( escala, chargeNumber = 0 ):
         newList.append(int(time_to_send[i]*escala))
     return (newList, packet_size)
 
-    
+# TODO
+def IOT_total_analyser():
+    pass
