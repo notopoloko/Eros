@@ -1,1 +1,12 @@
+.vscode
+*.pyc
+
+*.xlsx
+*.txt
+*.PNG
+*.png
+
+*.autosave
+
+*.json
 .idea
