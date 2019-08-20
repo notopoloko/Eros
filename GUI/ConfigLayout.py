@@ -1,7 +1,9 @@
 import numpy as np
+import matplotlib.backends.backend_qt5agg as backQt5
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-import matplotlib.backends.backend_qt5agg as backQt5
+from hurst import compute_Hc
+from statistics import stdev, mean
 
 
 class ConfigLayout(object):
@@ -30,5 +32,25 @@ class ConfigLayout(object):
         self.canvasX.axis(ymax = max( pointsToPlot ) *4/3)
         self.canvasX.figure.canvas.draw()
 
-    def mostraStat(self, points, mediaView, desvioView, tempoTotalView, hurstView):
-        pass
+    # TODO: Arrumar escala
+    def mostraStat(self, pointsToPlot, mediaView, desvioView, tempoTotalView, hurstView):
+        medidaTempo = [' minutos']
+        medidaTaxa = [' bytes/minuto']
+        # self.uiMainWindow.analiseEstatIOT.setVisible(True)
+
+        mediaView.setText('{0:.2f} '.format(mean(pointsToPlot)) + medidaTaxa[0] )
+        # if len( pointsToPlot ) > 1:
+        #     self.uiMainWindow.desvioViewIOT.setText('{0:.2f} '.format(stdev(pointsToPlot)) + medidaTaxa[self.uiMainWindow.escalaIOT.currentIndex()])
+        # else:
+        desvioView.setText('{0:.2f}'.format(stdev(pointsToPlot)) + medidaTaxa[0] )
+        tempoTotalView.setText( str( len(pointsToPlot) ) + medidaTempo[0])
+        if len(pointsToPlot) > 100:
+            # diferences = [0]*len(points)
+            # # diferences[0] = points[0]
+            # for i in range(len(points)):
+            #     diferences[i] = points[i] - points[i-1]
+                
+            H, c, _ = compute_Hc(pointsToPlot, kind='change', simplified=False)
+            hurstView.setText('H={:.4f}, c={:.4f}'.format(H,c))
+        else:
+            hurstView.setText('Sample com menos de 100 amostras')

@@ -8,11 +8,11 @@ from itertools import groupby
 
 from charge_generator import iot_charge
 from traffic_analyser import IOT_analyser
+from GUI.ConfigLayout import ConfigLayout
 
-class ConfigIOTLayout(object):
+class ConfigIOTLayout(ConfigLayout):
     def __init__(self, uiMainWindow):
-        self.uiMainWindow = uiMainWindow
-        self.canvasX = None
+        super().__init__(uiMainWindow)
 
     def configIOTLayout(self):
         self.uiMainWindow.widget_4.setVisible(False)
@@ -42,11 +42,13 @@ class ConfigIOTLayout(object):
 
             pointsToPlot = IOT_analyser(1)
             self.uiMainWindow.widget_4.setVisible(True)
+            # self.plotOnCanvas( self.uiMainWindow.IOTPlotLayout, pointsToPlot, 'Plot vídeo sob demanda', graphicColor='indigo' )
             self.plotOnCanvas( pointsToPlot )
             self.mostraIOTStat( pointsToPlot )
         except ValueError as ve:
             print('Erro ao criar carga', str(ve))
 
+    # TODO: Arrumar método
     def plotOnCanvas(self, pointsToPlot, xLabel='Minutos', yLabel="bytes"):
         if self.canvasX is None:
             canvas = backQt5.FigureCanvasQTAgg(Figure((5,3)))
@@ -71,7 +73,8 @@ class ConfigIOTLayout(object):
 
         pointsToPlot = IOT_analyser(a[comboIndex], self.uiMainWindow.numeroCargaIOT.currentIndex())
 
-        self.plotOnCanvas(pointsToPlot, xlabel[self.uiMainWindow.escalaIOT.currentIndex()])
+        # self.plotOnCanvas(self.uiMainWindow.IOTPlotLayout, pointsToPlot, 'Plot vídeo sob demanda', xlabel[self.uiMainWindow.escalaIOT.currentIndex()], graphicColor='indigo')
+        self.plotOnCanvas( pointsToPlot )
 
         self.uiMainWindow.widget_4.setVisible(True)
         self.mostraIOTStat(pointsToPlot)
@@ -82,7 +85,8 @@ class ConfigIOTLayout(object):
 
         pointsToPlot = IOT_analyser(1, chargeNumber)
 
-        self.plotOnCanvas(pointsToPlot, xlabel[self.uiMainWindow.escalaIOT.currentIndex()])
+        # self.plotOnCanvas(self.uiMainWindow.IOTPlotLayout, pointsToPlot, 'Plot vídeo sob demanda', xlabel[self.uiMainWindow.escalaIOT.currentIndex()], graphicColor='indigo')
+        self.plotOnCanvas( pointsToPlot )
 
         self.uiMainWindow.widget_4.setVisible(True)
         self.mostraIOTStat(pointsToPlot)

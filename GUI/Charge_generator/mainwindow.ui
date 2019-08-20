@@ -71,7 +71,7 @@ color: rgb(238, 238, 236);</string>
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab">
      <property name="contextMenuPolicy">
@@ -1947,8 +1947,8 @@ border: 0;</string>
      <widget class="QPushButton" name="pushButtonTotal">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>400</y>
+        <x>150</x>
+        <y>290</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -2344,6 +2344,164 @@ border-radius: 3px;
 color: rgb(43, 43, 43);
 background-color: rgb(177, 177, 177);
 </string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="analiseEstatTotal" native="true">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>370</y>
+        <width>221</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_18">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>221</width>
+         <height>213</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QLabel" name="label_37">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245);</string>
+          </property>
+          <property name="text">
+           <string>Média</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="mediaTotalView">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245)</string>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_38">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245);</string>
+          </property>
+          <property name="text">
+           <string>Desvio Padrão</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="desvioTotalView">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245)</string>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_39">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245);</string>
+          </property>
+          <property name="text">
+           <string>Tempo Total</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="tempoTotalView">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245)</string>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_40">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245);</string>
+          </property>
+          <property name="text">
+           <string>Hurst</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="hurstTotalView">
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(245,245,245)</string>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
           </property>
          </widget>
         </item>

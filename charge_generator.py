@@ -32,7 +32,7 @@ def web_charge(tempoDeSerie, numberOfCharges=1):
     for i in range(numberOfCharges):
         series = random_walk(tempoDeSerie, proba=0.3)
         a = min(series)
-        for idx, val in enumerate(series):
+        for idx, _ in enumerate(series):
             series[idx] -= a
         app = {
             "init_time": 0.0,

@@ -8,11 +8,11 @@ from hurst import compute_Hc
 
 from charge_generator import video_stream_charge
 from traffic_analyser import video_stream_analyser
+from GUI.ConfigLayout import ConfigLayout
 
-class StreamODLayout(object):
+class StreamODLayout(ConfigLayout):
     def __init__(self, uiMainWindow):
-        self.uiMainWindow = uiMainWindow
-        self.canvasX = None
+        super().__init__(uiMainWindow)
 
     def configStreamODLayout(self):
         self.uiMainWindow.widget_2.setVisible(False)
@@ -29,7 +29,7 @@ class StreamODLayout(object):
         # Problema quando a escala é alterada
         pointsToPlot = video_stream_analyser(a[comboIndex], self.uiMainWindow.numeroCarga.currentIndex())
 
-        self.plotOnCanvas( self.uiMainWindow.streamPlotLayout, pointsToPlot )
+        self.plotOnCanvas( self.uiMainWindow.streamPlotLayout, pointsToPlot, 'Plot Vídeo Sob Demanda' )
 
         self.uiMainWindow.widget_2.setVisible(True)
         self.mostraStreamODEstat(pointsToPlot)
@@ -38,7 +38,7 @@ class StreamODLayout(object):
         self.uiMainWindow.escalaStreamOD.setCurrentIndex(1)
         pointsToPlot = video_stream_analyser(1, comboIndex)
         self.mostraStreamODEstat(pointsToPlot)
-        self.plotOnCanvas(self.uiMainWindow.streamPlotLayout, pointsToPlot)
+        self.plotOnCanvas( self.uiMainWindow.streamPlotLayout, pointsToPlot, 'Plot Vídeo Sob Demanda' )
 
     def atualizaLabel(self, state):
         labels = [ 'Tempo de vídeo' , 'Tempo médio de vídeo']
@@ -69,30 +69,30 @@ class StreamODLayout(object):
             pointsToPlot = video_stream_analyser(1)
 
             self.uiMainWindow.widget_2.setVisible(True)
-            self.plotOnCanvas(self.uiMainWindow.streamPlotLayout, pointsToPlot)
+            self.plotOnCanvas( self.uiMainWindow.streamPlotLayout, pointsToPlot, 'Plot Vídeo Sob Demanda' )
             self.mostraStreamODEstat(pointsToPlot)
         except ValueError:
             self.functText()
 
-    def plotOnCanvas(self, canvasLayout, pointsToPlot, xLabel='Segundos', yLabel="Kbits"):
-        if self.canvasX is None:
-            canvas = backQt5.FigureCanvasQTAgg(Figure((5,3)))
-            navi_bar = NavigationToolbar( canvas, self.uiMainWindow.widget_2 )
-            canvasLayout.addWidget(canvas)
-            canvasLayout.addWidget(navi_bar)
+    # def plotOnCanvas(self, canvasLayout, pointsToPlot, xLabel='Segundos', yLabel="Kbits"):
+    #     if self.canvasX is None:
+    #         canvas = backQt5.FigureCanvasQTAgg(Figure((5,3)))
+    #         navi_bar = NavigationToolbar( canvas, self.uiMainWindow.widget_2 )
+    #         canvasLayout.addWidget(canvas)
+    #         canvasLayout.addWidget(navi_bar)
 
-            self.canvasX = canvas.figure.subplots()
-            self.canvasX.set_title('Plot vídeo sob demanda')
-        else:
-            self.canvasX.clear()
+    #         self.canvasX = canvas.figure.subplots()
+    #         self.canvasX.set_title('Plot vídeo sob demanda')
+    #     else:
+    #         self.canvasX.clear()
 
-        t = np.linspace(0, (len(pointsToPlot) - 1), len(pointsToPlot))
-        self.canvasX.vlines(t, [0], pointsToPlot, colors='blue' )
+    #     t = np.linspace(0, (len(pointsToPlot) - 1), len(pointsToPlot))
+    #     self.canvasX.vlines(t, [0], pointsToPlot, colors='blue' )
 
-        self.canvasX.set_xlabel(xLabel)
-        self.canvasX.set_ylabel(yLabel)
-        self.canvasX.axis(ymax=max(pointsToPlot)*4/3)
-        self.canvasX.figure.canvas.draw()
+    #     self.canvasX.set_xlabel(xLabel)
+    #     self.canvasX.set_ylabel(yLabel)
+    #     self.canvasX.axis(ymax=max(pointsToPlot)*4/3)
+    #     self.canvasX.figure.canvas.draw()
 
     def functText(self):
         print('Erro ao gerar carga de StreamOD')
