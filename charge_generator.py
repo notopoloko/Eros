@@ -30,12 +30,13 @@ def web_charge(tempoDeSerie, numberOfCharges=1):
     listOfCharges = list()
 
     for i in range(numberOfCharges):
-        series = random_walk(tempoDeSerie, proba=0.3)
+        series = random_walk(tempoDeSerie, proba=0.3, cumprod=True)
         a = min(series)
         for idx, _ in enumerate(series):
             series[idx] -= a
+            series[idx] *= 1000
         app = {
-            "init_time": 0.0,
+            "init_time": np.random.uniform(high=86400),
             "server_port": 82,
             "series": series
         }
@@ -58,7 +59,6 @@ def video_stream_charge(tempoVideo, video_code, numeroDeCargas = 1):
         tempoVideoList.append(tempoVideo)
     else:
         tempoVideoList = np.random.normal(tempoVideo, tempoVideoMedioDev, numeroDeCargas).tolist()
-
     for i in range(numeroDeCargas):
         numberOfSegments = int(tempoVideoList[i]/segmentTime)
 
@@ -67,7 +67,7 @@ def video_stream_charge(tempoVideo, video_code, numeroDeCargas = 1):
         timeInterRequests = t.rvs(loc=1.932, scale=0.245, df=2.086, size=numberOfSegments).tolist()
 
         app = {
-            "init_time": 0.0,
+            "init_time": np.random.uniform(high=86400),
             "server_port": 81,
             "segment_time": segmentTime,
             "video_codification": video_code,
@@ -118,7 +118,7 @@ def voip_charge( call_duration, numeroDeCargas = 1 ):
         # f.close()
 
         app = {
-            "init_timw":0.0,
+            "init_time":np.random.uniform(high=86400),
             "server_port": 80,
             "packet_size": 20,
             "time_between_packets": sequenceOfPackets,
