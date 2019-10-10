@@ -44,6 +44,7 @@ def web_charge(tempoDeSerie, numberOfCharges=1):
 
     file_path = "./Charges/web_charge.json"
     json.dump(listOfCharges, codecs.open(file_path, 'w', encoding='utf-8'), indent=4)
+    return listOfCharges
 
 def video_stream_charge(tempoVideo, video_code, numeroDeCargas = 1):
     # time_downloading gerado atraves da distribuicao Burr tipo 12
@@ -79,6 +80,7 @@ def video_stream_charge(tempoVideo, video_code, numeroDeCargas = 1):
 
     file_path = "./Charges/stream_charge.json"
     json.dump(listOfCharges, codecs.open(file_path, 'w', encoding='utf-8'), indent=4)
+    return listOfCharges
 
 
 def voip_charge( call_duration, numeroDeCargas = 1 ):
@@ -131,6 +133,7 @@ def voip_charge( call_duration, numeroDeCargas = 1 ):
 
     file_path = "./Charges/voip_charge.json"
     json.dump(listOfCharges, codecs.open(file_path, 'w', encoding='utf-8'), indent=4)
+    return listOfCharges
 
 
 def iot_charge(tamanhoMedioDePacote, numberOfCharges, tempoEntreMensagem):
@@ -155,6 +158,7 @@ def iot_charge(tamanhoMedioDePacote, numberOfCharges, tempoEntreMensagem):
 
     file_path = "./Charges/IOT_charge.json"
     json.dump(chargeList, codecs.open(file_path, 'w', encoding='utf-8'), separators=(',', ':'), indent=4)
+    return chargeList
 
 if __name__ == "__main__":
     voip_charge(20)
