@@ -55,7 +55,6 @@ class StreamODLayout(ConfigLayout):
                 numeroCarga = int(self.uiMainWindow.numeroCargas.toPlainText())
             video_code = video_codes[ self.uiMainWindow.comboBox_3.currentIndex() ]
             tempoVideo = int(self.uiMainWindow.tempoVideo.toPlainText())
-
             self.uiMainWindow.tempoVideo.setText('')
             self.uiMainWindow.numeroCargas.setText('')
 
