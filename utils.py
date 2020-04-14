@@ -99,8 +99,8 @@ def plot_agr_load():
     H, c, data = compute_Hc(series_stream, kind='change', simplified=False)
     print("Streaming de vídeo => H={:.4f}, c={:.4f}".format(H,c))
     
-    plt.subplot(2,3,1)
-    plt.plot(series_stream, color='k')
+    plt.subplot(2,2,1)
+    plt.plot(series_stream, color='darkred')
     plt.title('Streaming de vídeo sob demanda')
     plt.xlabel('Tempo (segundos)')
     plt.ylabel('Trafego agregado (bytes)')
@@ -125,8 +125,8 @@ def plot_agr_load():
         except IOError:
             print('No file named "./Charges/stream_charge{}.json"'.format(i))
 
-    plt.subplot(2,3,2)
-    plt.plot(series_web, color='k')
+    plt.subplot(2,2,2)
+    plt.plot(series_web, color='darkred')
     plt.title('WEB')
     plt.xlabel('Tempo (segundos)')
     plt.ylabel('Trafego agregado (bytes)')
@@ -157,8 +157,8 @@ def plot_agr_load():
     H, c, data = compute_Hc(series_voip, kind='change', simplified=False)
     print("VoIP => H={:.4f}, c={:.4f}".format(H,c))
 
-    plt.subplot(2,3,3)
-    plt.plot(series_voip, color='k')
+    plt.subplot(2,2,3)
+    plt.plot(series_voip, color='darkred')
     plt.title('VoIP')
     plt.xlabel('Tempo (segundos)')
     plt.ylabel('Trafego agregado (bytes)')
@@ -171,14 +171,14 @@ def plot_agr_load():
     H, c, data = compute_Hc(series_total, kind='change', simplified=False)
     print("Total => H={:.4f}, c={:.4f}".format(H,c))
 
-    plt.subplot(2,3,5)
-    plt.plot(series_total, color='k')
+    plt.subplot(2,2,4)
+    plt.plot(series_total, color='darkred')
     plt.title('Tráfego Agregado')
     plt.xlabel('Tempo (segundos)')
     plt.ylabel('Trafego agregado (bytes)')
     plt.subplots_adjust(hspace=0.3)
 
-    # plt.show()
+    plt.show()
     # print(sum(series_total))
 
 def sum_variable_message_size(jsonFile: str) -> int:
@@ -217,4 +217,7 @@ if __name__ == "__main__":
     #     total += sum_fixed_size('./Charges/voip_charge{}.json'.format(i))
     # print(total)
 
-    plot_agr_load()
+    # plot_agr_load()
+    with open('./Charges/stream_charge0.json') as fp:
+        data = json.load(fp)
+        print(mean(data['packet_size']))

@@ -47,6 +47,7 @@ class StreamODLayout(ConfigLayout):
 
     def generateTraffic(self):
         # Padrões de codificação conhecidos
+        xLabel = ['Décimo de segundo', 'Segundos', 'Minutos']
         video_codes = [91000, 180000, 469000, 978000, 2058000, 3953000, 9581000, 21373000]
         
         try:
@@ -64,11 +65,11 @@ class StreamODLayout(ConfigLayout):
             self.uiMainWindow.numeroCarga.setCurrentIndex(0)
             self.uiMainWindow.escalaStreamOD.setCurrentIndex(1)
 
-            video_stream_charge(tempoVideo, video_code, numeroCarga)
+            video_stream_charge(tempoVideo, video_code, numeroCarga, [0.0]*numeroCarga)
             pointsToPlot = video_stream_analyser(1)
 
             self.uiMainWindow.widget_2.setVisible(True)
-            self.plotOnCanvas( self.uiMainWindow.streamPlotLayout, pointsToPlot, 'Plot Vídeo Sob Demanda' )
+            self.plotOnCanvas( self.uiMainWindow.streamPlotLayout, pointsToPlot, 'Plot Vídeo Sob Demanda', xLabel=xLabel[self.uiMainWindow.numeroCarga.currentIndex()])
             self.mostraStreamODEstat(pointsToPlot)
         except ValueError:
             self.functText()
@@ -98,7 +99,7 @@ class StreamODLayout(ConfigLayout):
     
     def mostraStreamODEstat(self, pointsToPlot):
         medidaTempo = [' milisegundos', ' segundos', ' minutos']
-        medidaTaxa = [ ' Kbits/100 milisegundos', ' Kbits/segundo', ' Kbits/minuto' ]
+        medidaTaxa = [ ' bits/100 milisegundos', ' bits/segundo', ' bits/minuto' ]
         self.uiMainWindow.analiseEstatStreamOD.setVisible(True)
         self.uiMainWindow.mediaViewStreamOD.setText('{0:.2f} '.format(mean(pointsToPlot)) + medidaTaxa[self.uiMainWindow.escalaStreamOD.currentIndex()] )
         if len( pointsToPlot ) > 1:

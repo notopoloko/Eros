@@ -19,7 +19,7 @@ class ConfigWEBLayout(ConfigLayout):
 
     def mostraStatWEB( self, points ):
         medidaTempo = [' milisegundos', ' segundos', ' minutos']
-        medidaTaxa = [ ' bits/100 milisegundos', ' bytes/segundo', 'bits/minuto' ]
+        medidaTaxa = [ ' byts/100 milisegundos', ' bytes/segundo', 'byts/minuto' ]
         self.uiMainWindow.analiseEstatWeb.setVisible(True)
         self.uiMainWindow.mediaViewWEB.setText('{0:.2f} '.format(mean(points)) + medidaTaxa[1] )
         if len(points) > 1:
@@ -32,27 +32,26 @@ class ConfigWEBLayout(ConfigLayout):
             # # diferences[0] = points[0]
             # for i in range(len(points)):
             #     diferences[i] = points[i] - points[i-1]
-                
             H, c, data = compute_Hc(points, kind='change', simplified=False)
             self.uiMainWindow.HurstViewWEB.setText('H={:.4f}, c={:.4f}'.format(H,c))
         else:
-            self.uiMainWindow.HurstViewWEB.setText('Sample com menos de 100 amostras')
+            self.uiMainWindow.HurstViewWEB.setText('Sample com menos de 101 amostras')
 
     def generateWEBPlot( self ):
         try:
-            numeroCargas = 1
+            self.numeroCargas = 1
             if self.uiMainWindow.numeroCargsWeb.toPlainText() != '':
-                numeroCargas = int(self.uiMainWindow.numeroCargsWeb.toPlainText())
+                self.numeroCargas = int(self.uiMainWindow.numeroCargsWeb.toPlainText())
             tempoMedio = int(self.uiMainWindow.tempoCargaWeb.toPlainText())
 
             self.uiMainWindow.numeroCargsWeb.setText('')
             self.uiMainWindow.tempoCargaWeb.setText('')
             # self.uiMainWindow.comboBox.setVisible(True)
 
-            web_charge(tempoMedio, numeroCargas)
+            web_charge(tempoMedio, self.numeroCargas)
             self.uiMainWindow.numeroCargaWEB.clear()
 
-            for i in range(numeroCargas):
+            for i in range(self.numeroCargas):
                 self.uiMainWindow.numeroCargaWEB.addItem( 'Carga ' + str(i + 1))
 
             pointsToPlot = web_analyser(0)
@@ -72,7 +71,7 @@ class ConfigWEBLayout(ConfigLayout):
         xLabel = ['100 Milisegundos', 'Segundos', 'Minutos']
 
         # Problema quando a escala é alterada
-        pointsToPlot = voip_analyser(a[comboIndex], self.uiMainWindow.comboBox.currentIndex())
+        pointsToPlot = web_analyser(a[comboIndex], self.uiMainWindow.comboBox.currentIndex())
 
         self.plotOnCanvas(self.uiMainWindow.webPlotLayout, pointsToPlot, 'Plot WEB', xLabel[comboIndex] )
 
@@ -81,7 +80,9 @@ class ConfigWEBLayout(ConfigLayout):
 
     def mudaPlot(self, comboIndex):
         # self.uiMainWindow.comboBox_2.setCurrentIndex(1)
-        pointsToPlot = web_analyser(comboIndex)
+        if comboIndex < 0:
+            return
+        pointsToPlot = web_analyser(1, comboIndex)
         self.plotOnCanvas(self.uiMainWindow.webPlotLayout, pointsToPlot, 'Plot WEB')
         self.mostraStatWEB(pointsToPlot)
 
@@ -90,7 +91,7 @@ class ConfigWEBLayout(ConfigLayout):
         self.uiMainWindow.analiseEstatWeb.setVisible(initState)
         self.uiMainWindow.widgetWEB.setVisible(initState)
         # self.uiMainWindow.comboBox.setVisible(initState)
-        self.uiMainWindow.escalaWEB.setVisible(initState)
+        self.uiMainWindow.escalaWEB.setCurrentIndex(1)
 
         self.uiMainWindow.pushButtonWeb.clicked.connect( lambda: self.generateWEBPlot( ))
 

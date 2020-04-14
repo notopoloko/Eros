@@ -15,7 +15,7 @@ def web_charge(tempoDeSerie: int, numberOfCharges: int = 1, init_time: float = 0
     for k in range(numberOfCharges):
         sequanciaDeMensagens = list()
         tempoEntreMensagens = list()
-        tempo = 0
+        tempo = 0.0
         while tempo <= tempoDeSerie:
             numeroDeObjetosPrincipais = int(np.random.lognormal(0.473844, 0.688471))
             tamanhoObjetosPrincipais = numeroDeObjetosPrincipais*[0]
@@ -43,6 +43,17 @@ def web_charge(tempoDeSerie: int, numberOfCharges: int = 1, init_time: float = 0
             sequanciaDeMensagens.append(0)
             tempo += toff
             # print('numeroObjetosSecundarios', numeroObjetosSecundarios, '\ntamanhoObjetosSecundarios', tamanhoObjetosSecundarios, '\ntempoEntreObjetosSecundarios', tempoEntreObjetosSecundarios, '\ntoff', toff)
+
+        # Ajusta o tempo de carga
+        pseudoTime = 0.0
+        for i in range(len(tempoEntreMensagens)):
+            pseudoTime += tempoEntreMensagens[i]
+            if pseudoTime >= tempoDeSerie:
+                # Time to cut
+                tempoEntreMensagens = tempoEntreMensagens[:i+1]
+                sequanciaDeMensagens = sequanciaDeMensagens[:i+1]
+                tempo = pseudoTime
+                break
 
         app = {
             "init_time": init_time,
@@ -127,7 +138,7 @@ def video_stream_charge(tempoVideo: int, video_code: int, numeroDeCargas: int = 
         json.dump(app, codecs.open(file_path, 'w', encoding='utf-8'), indent=4)
 
 
-def voip_charge ( callDuration: int, numeroDeCargas: int = 1, tempo: list = [0.0] ) -> list:
+def voip_charge ( callDuration: int, numeroDeCargas: int = 1, tempo: list = [0.0], voipCodec: int = 0 ) -> None:
     """
     Geração de carga de trabalho de Voz sobre IP (VoIP)
     \nParametros:
@@ -135,80 +146,120 @@ def voip_charge ( callDuration: int, numeroDeCargas: int = 1, tempo: list = [0.0
     não for especificado, callDuration será a média de uma distribuição de Pareto
     tipo 2.
     numeroDeCargas: Numero de cargas a serem geradas
+    tempo: Tempo das cargas
+    voipCodec: 
+        0 -> G.729 8 kbps
+        1 -> G.729 6.4 kbps
+        2 -> G.711
+        3 -> SILK
+        4 -> iSAC
     """
+    cbrMessageSize = [20, 16, 214]
+    cbrDevNormalDistribution = [0.0038, 0.0038, 0.0047]
 
-    # Tempo entre geração de pacotes modelado como uma distribuição 
-    # normal com média 0.02 e desvio 0.0038 segundos
-    time_between_packets = 0.02
-    time_between_packets_dev = 0.0038
+    vbrMeanNormalDistribution = [0.02, 0.03]
+    vbrDevNormalDistribution = [0.0070, 0.0022]
+    vbrARMAParams = [[0.281, -0.332, -0.600],[0.117, -0.190, -0.631]]
+    
+    if voipCodec == 0 or voipCodec == 1 or voipCodec == 2:
+        # G.729 ou G.711
+        time_between_packets = 0.02
+        time_between_packets_dev = cbrDevNormalDistribution[voipCodec]
+        messageSize = cbrMessageSize[voipCodec]
 
-    # call_duration_list = list()
-    # if numeroDeCargas != 1:
-    #     call_duration_list = np.random.pareto(2.5, numeroDeCargas) + 0.5
-    #     # call_duration_list = np.random.pareto(3.0, numeroDeCargas)
-    #     call_duration_list = [callDuration*x for x in call_duration_list]
-    # else:
-    #     call_duration_list.append(callDuration)
+        for j in range(numeroDeCargas):
+            numberOfPackets = int( callDuration / time_between_packets )
+            sequenceOfPackets = np.random.normal(time_between_packets, time_between_packets_dev, numberOfPackets).tolist()
 
-    # listOfCharges = list()
-    for j in range(numeroDeCargas):
+            app = {
+                "init_time": tempo[j],
+                "server_port": 5060,
+                "packet_size": messageSize,
+                "time_between_packets": sequenceOfPackets,
+                "call_duration": callDuration
+            }
+            file_path = "./Charges/voip_charge{}.json".format(j)
+            json.dump(app, codecs.open(file_path, 'w', encoding='utf-8'), indent=4)
+        return
+    elif voipCodec == 3 or voipCodec == 4:
+        # SILK ou iSAC
+        time_between_packets = vbrMeanNormalDistribution[voipCodec - 3]
+        time_between_packets_dev = vbrDevNormalDistribution[voipCodec - 3]
 
-        numberOfPackets = int( callDuration / time_between_packets )
-        sequenceOfPackets = [0.0] + np.random.normal(time_between_packets, time_between_packets_dev, numberOfPackets).tolist()
-        # sequenceOfPackets = sequenceOfPackets.tolist()
+        for j in range(numeroDeCargas):
+            numberOfPackets = int( callDuration / time_between_packets )
+            sequenceOfPackets = np.random.normal(time_between_packets, time_between_packets_dev, numberOfPackets).tolist()
 
-        # Tempo de inicialização uniformemente distribuído ao longo do dia
-        app = {
-            "init_time": tempo[j],
-            "server_port": 80,
-            "packet_size": 20,
-            "time_between_packets": sequenceOfPackets,
-            "call_duration": callDuration
-        }
+            # Gera o tamanho das mensagens
+            messageSize = [0] * numberOfPackets
+            whiteNoise = [0.0] + np.random.normal(0, 22, numberOfPackets).tolist()
+            loopBack = [0.0]*3
+            for i in range(numberOfPackets):
+                loopBack[0] = loopBack[1]
+                loopBack[1] = loopBack[2]
+                loopBack[2] = 159 + whiteNoise[i + 1] + vbrARMAParams[voipCodec-3][0] * loopBack[1] + vbrARMAParams[voipCodec-3][1] * loopBack[0] + vbrARMAParams[voipCodec-3][2] * whiteNoise[i]
+                messageSize[i] = int(loopBack[2])
 
-        # listOfCharges.append(app)
+            app = {
+                "init_time": tempo[j],
+                "server_port": 5060,
+                "packet_size": messageSize,
+                "time_between_packets": sequenceOfPackets,
+                "call_duration": callDuration
+            }
+            file_path = "./Charges/voip_charge{}.json".format(j)
+            json.dump(app, codecs.open(file_path, 'w', encoding='utf-8'), indent=4)
 
-        file_path = "./Charges/voip_charge{}.json".format(552+j)
-        json.dump(app, codecs.open(file_path, 'w', encoding='utf-8'), indent=4)
-    # return listOfCharges
 
-
-def iot_charge(tempoTotal: int, tamanhoDeMensagem: int, numeroDeDispositivos: int) -> list:
+def iot_charge(tempoTotal: int, tamanhoDeMensagem: int, numeroDeDispositivos: int, periodoDasMesagens: int, numeroDeCargas: int = 1) -> None:
     """
     Modelagem segue uma distribuição periódica de mensagens com período inicial de geração 
-    segundo uma distribuição uniforme [0:1]. Em [4] recomenda-se uma quantidade de nós acima
+    segundo uma distribuição uniforme [0:T]. Em [4] recomenda-se uma quantidade de nós acima
     de 10000 para diminuir o erro dos tempos entre duas mensagens.
     Parâmetros: 
     tempoTotal: tempo em segundos no qual os "dispositivos" realizam transmissões.
     numeroDeDispositivos: número de dispositivos que "compõem" a rede.
     tamanhoDeMensagem: tamanho em bytes das mensagens que compõe o fluxo.
     """
+    for j in range(numeroDeCargas):
+        tempoEntreMensagens = sorted(np.random.uniform(high=periodoDasMesagens, size=numeroDeDispositivos).tolist())
+    
+        # Calcula a diferenca de tempo entre duas mensagens
+        for i in range(1, len(tempoEntreMensagens) - 1):
+            tempoEntreMensagens[i] = tempoEntreMensagens[i+1] - tempoEntreMensagens[i]
+        tempoEntreMensagens[-1] = periodoDasMesagens - tempoEntreMensagens[-1]
 
-    tempoEntreMensagens = sorted(np.random.uniform(size=numeroDeDispositivos).tolist())
-    # Mantem a periodicidade das transmissões
-    tempoEntreMensagens = tempoEntreMensagens*tempoTotal
+        # Torna o processo cíclico
+        totalTime = 0
+        for i in tempoEntreMensagens:
+            totalTime += i
+        tempoEntreMensagens[-1] += periodoDasMesagens + tempoEntreMensagens[0] - totalTime
 
-    # Fazer os ajustes de tempo
-    i = 0
-    while i < tempoTotal:
-        j = 0
-        while j < numeroDeDispositivos:
-            tempoEntreMensagens[ i*numeroDeDispositivos + j ] += i
-            j+=1
-        i+=1
+        # Mantem a periodicidade das transmissões
+        if int(tempoTotal/periodoDasMesagens) == 0:
+            tempoEntreMensagens = tempoEntreMensagens * 1
+        else:
+            tempoEntreMensagens = [0.0] + tempoEntreMensagens * int(tempoTotal/periodoDasMesagens)
 
-    app = {
-        "init_time": 0.0,
-        "server_port": 79,
-        "packet_size": tamanhoDeMensagem,
-        "time_to_send": tempoEntreMensagens,
-    }
+        # Faz um corte no tempo exato
+        pseudoTempo = 0
+        for i in range(len(tempoEntreMensagens)):
+            pseudoTempo += tempoEntreMensagens[i]
+            if pseudoTempo > tempoTotal:
+                tempoEntreMensagens = tempoEntreMensagens[:i]
+                break
 
-    file_path = "./Charges/IOT_charge.json"
-    json.dump(app, codecs.open(file_path, 'w', encoding='utf-8'), separators=(',', ':'), indent=4)
-    return app
+        app = {
+            "init_time": 0.0,
+            "server_port": 79,
+            "packet_size": tamanhoDeMensagem,
+            "time_between_packets": tempoEntreMensagens,
+        }
 
-if __name__ == "__main__":
+        file_path = "./Charges/IOT_charge{}.json".format(j)
+        json.dump(app, codecs.open(file_path, 'w', encoding='utf-8'), separators=(',', ':'), indent=4)
+
+# if __name__ == "__main__":
     # voip_charge(20)
 
     # Tempo médio de vídeo de 4 minutos e 20 segundos = 260
@@ -218,9 +269,8 @@ if __name__ == "__main__":
     # video_stream_charge(260, 2058000, n_stream_load, init_time)
 
     # 
-    n_voip_load = 2
-    init_time_voip = np.random.uniform(0, 86400-144, n_voip_load)
-    voip_charge(181, n_voip_load, init_time_voip)
+    # n_voip_load = 2
+    # init_time_voip = np.random.uniform(0, 86400-144, n_voip_load)
+    # voip_charge(181, n_voip_load, init_time_voip)
 
     # web_charge(86400, 7)
-    # iot_charge(5, 50, 3)

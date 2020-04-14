@@ -10,6 +10,7 @@ class ConfigLayout(object):
     def __init__(self, uiMainWindow):
         self.uiMainWindow = uiMainWindow
         self.canvasX = None
+        self.numeroCargas = 0
 
     def plotOnCanvas(self, plotLayout, pointsToPlot, title, xLabel = 'Segundos', yLabel = 'bytes', graphicColor='red'):
         if self.canvasX is None:
@@ -34,8 +35,8 @@ class ConfigLayout(object):
 
     # TODO: Arrumar escala
     def mostraStat(self, pointsToPlot, mediaView, desvioView, tempoTotalView, hurstView):
-        medidaTempo = [' minutos']
-        medidaTaxa = [' bytes/minuto']
+        medidaTempo = [' segundos']
+        medidaTaxa = [' bytes/segundo']
         # self.uiMainWindow.analiseEstatIOT.setVisible(True)
 
         mediaView.setText('{0:.2f} '.format(mean(pointsToPlot)) + medidaTaxa[0] )
@@ -49,8 +50,17 @@ class ConfigLayout(object):
             # # diferences[0] = points[0]
             # for i in range(len(points)):
             #     diferences[i] = points[i] - points[i-1]
-                
-            H, c, _ = compute_Hc(pointsToPlot, kind='change', simplified=False)
-            hurstView.setText('H={:.4f}, c={:.4f}'.format(H,c))
+            try:
+                H, c, _ = compute_Hc(pointsToPlot, kind='change', simplified=False)
+                if H > 1:
+                    hurstView.setText('H > 1 não é um valor válido')
+                    return
+                hurstView.setText('H={:.4f}, c={:.4f}'.format(H,c))
+            except FloatingPointError as fpe:
+                hurstView.setText('Unable to calculate Hurst value with current series')
+                print('Erro no calculo do valor de hurst: ' + fpe.__str__())
         else:
-            hurstView.setText('Sample com menos de 100 amostras')
+            hurstView.setText('Sample com menos de 101 amostras')
+
+    def getNumeroCargas(self):
+        return self.numeroCargas

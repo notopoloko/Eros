@@ -7,7 +7,7 @@ from statistics import mean, stdev
 from hurst import compute_Hc
 
 from charge_generator import web_charge, voip_charge, video_stream_charge
-from traffic_analyser import voip_analyser, video_stream_analyser, web_analyser
+from traffic_analyser import voip_analyser
 from GUI.ConfigLayout import ConfigLayout
 
 class ConfigVoIPLayout(ConfigLayout):
@@ -40,19 +40,19 @@ class ConfigVoIPLayout(ConfigLayout):
 
     def generateVoipPlot( self ):
         try:
-            numeroCargas = 1
+            self.numeroCargas = 1
             if self.uiMainWindow.numeroCargasVoIP.toPlainText() != '':
-                numeroCargas = int(self.uiMainWindow.numeroCargasVoIP.toPlainText())
+                self.numeroCargas = int(self.uiMainWindow.numeroCargasVoIP.toPlainText())
             tempoMedio = int(self.uiMainWindow.duracao.toPlainText())
 
             self.uiMainWindow.numeroCargasVoIP.setText('')
             self.uiMainWindow.duracao.setText('')
             self.uiMainWindow.comboBox.setVisible(True)
 
-            voip_charge(tempoMedio, numeroCargas)
+            voip_charge(tempoMedio, self.numeroCargas, [0.0] * self.numeroCargas, voipCodec=self.uiMainWindow.voipCodec.currentIndex())
             self.uiMainWindow.comboBox.clear()
 
-            for i in range(numeroCargas):
+            for i in range(self.numeroCargas):
                 self.uiMainWindow.comboBox.addItem( 'Carga ' + str(i + 1))
 
             pointsToPlot = voip_analyser(1)
@@ -80,6 +80,9 @@ class ConfigVoIPLayout(ConfigLayout):
         self.mostraStatVoIP( pointsToPlot)
 
     def mudaPlot(self, comboIndex):
+        if comboIndex < 0:
+            # Invalid combo index
+            return
         self.uiMainWindow.comboBox_2.setCurrentIndex(1)
         pointsToPlot = voip_analyser(1, comboIndex)
         self.plotOnCanvas(self.uiMainWindow.voipPlotLayout_2, pointsToPlot, 'Plot VoIP', graphicColor='blue')

@@ -95,8 +95,8 @@ border: 0;</string>
      <widget class="QPushButton" name="pushButtonVoip">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>240</y>
+        <x>50</x>
+        <y>320</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -116,14 +116,14 @@ border:1px solid rgb(255, 255, 255)
 </string>
       </property>
       <property name="text">
-       <string>Gerar tráfego para o NS3</string>
+       <string>Gerar tráfego</string>
       </property>
      </widget>
      <widget class="QWidget" name="analiseEstatVoIP" native="true">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>300</y>
+        <x>30</x>
+        <y>380</y>
         <width>231</width>
         <height>221</height>
        </rect>
@@ -400,11 +400,78 @@ color: rgb(45, 45, 45);</string>
        <rect>
         <x>40</x>
         <y>50</y>
-        <width>221</width>
-        <height>131</height>
+        <width>231</width>
+        <height>201</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="parametroVoIP">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(245, 245, 245);</string>
+         </property>
+         <property name="text">
+          <string>CODEC</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="voipCodec">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-top-left-radius: 10px;
+color: rgb(43, 43, 43);
+background-color: rgb(177, 177, 177);
+</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>G.729 (CBR: 8 kbps) </string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>G.729 (CBR: 6.4 kbps) </string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>G.711 A-Law</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>SILK (VBR)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>iSAC (VBR)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
        <item>
         <widget class="QLabel" name="label">
          <property name="font">
@@ -1022,7 +1089,7 @@ background-color: rgb(177, 177, 177);
 border:1px solid rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>Gerar tráfego para o NS3</string>
+       <string>Gerar tráfego</string>
       </property>
      </widget>
     </widget>
@@ -1051,7 +1118,7 @@ border: 0;</string>
      <widget class="QWidget" name="verticalLayoutWidget_4">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>40</x>
         <y>50</y>
         <width>261</width>
         <height>151</height>
@@ -1181,7 +1248,7 @@ border-radius: 3px;
 border:1px solid rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>Gerar tráfego para o NS3</string>
+       <string>Gerar tráfego</string>
       </property>
      </widget>
      <widget class="QWidget" name="widgetWEB" native="true">
@@ -1464,10 +1531,10 @@ border: 0;</string>
      <widget class="QWidget" name="verticalLayoutWidget_8">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>40</y>
-        <width>281</width>
-        <height>191</height>
+        <x>29</x>
+        <y>20</y>
+        <width>331</width>
+        <height>301</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="parametosIOT">
@@ -1485,7 +1552,7 @@ border: 0;</string>
           <string notr="true">color: rgb(245, 245, 245);</string>
          </property>
          <property name="text">
-          <string>Número de cargas</string>
+          <string>Número de dispositivos</string>
          </property>
         </widget>
        </item>
@@ -1534,7 +1601,7 @@ border-radius: 3px;
           <string notr="true">color: rgb(245, 245, 245);</string>
          </property>
          <property name="text">
-          <string>Tamanho médio de mansagem</string>
+          <string>Tamanho da mansagem</string>
          </property>
         </widget>
        </item>
@@ -1583,7 +1650,56 @@ border-radius: 3px;
           <string notr="true">color: rgb(245, 245, 245);</string>
          </property>
          <property name="text">
-          <string>Tempo entre mensagem</string>
+          <string>Período individual de transmissão</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="periodoMensagem">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255,255,255);
+color: rgb(45,45,45);
+border-radius: 3px;
+</string>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhDigitsOnly</set>
+         </property>
+         <property name="placeholderText">
+          <string notr="true">Em segundos</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_36">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(245, 245, 245);</string>
+         </property>
+         <property name="text">
+          <string>Tempo total</string>
          </property>
         </widget>
        </item>
@@ -1614,7 +1730,56 @@ border-radius: 3px;
           <set>Qt::ImhDigitsOnly</set>
          </property>
          <property name="placeholderText">
-          <string notr="true">Em minutos</string>
+          <string notr="true">Em segundos</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_46">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(245, 245, 245);</string>
+         </property>
+         <property name="text">
+          <string>Número de Cargas</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="numeroCargasIOT">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255,255,255);
+color: rgb(45,45,45);
+border-radius: 3px;
+</string>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhDigitsOnly</set>
+         </property>
+         <property name="placeholderText">
+          <string notr="true">Número de cargas</string>
          </property>
         </widget>
        </item>
@@ -1665,12 +1830,12 @@ background-color: rgb(177, 177, 177);
        </property>
        <item>
         <property name="text">
-         <string>Minutos</string>
+         <string>Segundos</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Horas</string>
+         <string>Minutos</string>
         </property>
        </item>
       </widget>
@@ -1703,7 +1868,7 @@ background-color: rgb(177, 177, 177);
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>310</y>
+        <y>340</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -1729,7 +1894,7 @@ border:1px solid rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>380</y>
+        <y>400</y>
         <width>221</width>
         <height>221</height>
        </rect>
@@ -1968,10 +2133,10 @@ border:1px solid rgb(255, 255, 255);</string>
      <widget class="QWidget" name="voipTotalParam" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>211</width>
-        <height>111</height>
+        <x>90</x>
+        <y>30</y>
+        <width>281</width>
+        <height>161</height>
        </rect>
       </property>
       <widget class="QWidget" name="verticalLayoutWidget_14">
@@ -1979,8 +2144,8 @@ border:1px solid rgb(255, 255, 255);</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>211</width>
-         <height>111</height>
+         <width>281</width>
+         <height>161</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -2004,81 +2169,10 @@ border:1px solid rgb(255, 255, 255);</string>
            <string notr="true">color: rgb(245, 245, 245);</string>
           </property>
           <property name="text">
-           <string>VoIP</string>
+           <string>Escolha um período</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QTextEdit" name="tempoInicialVoIP">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255,255,255);
-color: rgb(45,45,45);
-border-radius: 3px;
-</string>
-          </property>
-          <property name="inputMethodHints">
-           <set>Qt::ImhDigitsOnly</set>
-          </property>
-          <property name="placeholderText">
-           <string notr="true">Tempo Inicial</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="numeroCarga_2">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-left-radius: 10px;
-color: rgb(43, 43, 43);
-background-color: rgb(177, 177, 177);
-</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="streamTotalParam" native="true">
-      <property name="geometry">
-       <rect>
-        <x>260</x>
-        <y>20</y>
-        <width>211</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <widget class="QWidget" name="verticalLayoutWidget_15">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>211</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
          <widget class="QLabel" name="label_33">
           <property name="maximumSize">
@@ -2090,7 +2184,7 @@ background-color: rgb(177, 177, 177);
           <property name="font">
            <font>
             <family>DejaVu Sans</family>
-            <pointsize>12</pointsize>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
@@ -2099,12 +2193,12 @@ background-color: rgb(177, 177, 177);
            <string notr="true">color: rgb(245, 245, 245);</string>
           </property>
           <property name="text">
-           <string>Stream de Vídeo</string>
+           <string>Início</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="tempoInicialVideo">
+         <widget class="QTextEdit" name="tempoInicialTotal">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -2134,141 +2228,6 @@ border-radius: 3px;
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QComboBox" name="numeroCarga_5">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-left-radius: 10px;
-color: rgb(43, 43, 43);
-background-color: rgb(177, 177, 177);
-</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="iotTotalParam" native="true">
-      <property name="geometry">
-       <rect>
-        <x>260</x>
-        <y>160</y>
-        <width>211</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <widget class="QWidget" name="verticalLayoutWidget_17">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>211</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_8">
-        <item>
-         <widget class="QLabel" name="label_35">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>DejaVu Sans</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245, 245, 245);</string>
-          </property>
-          <property name="text">
-           <string>IOT</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTextEdit" name="tempoInicialIOT">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255,255,255);
-color: rgb(45,45,45);
-border-radius: 3px;
-</string>
-          </property>
-          <property name="inputMethodHints">
-           <set>Qt::ImhDigitsOnly</set>
-          </property>
-          <property name="placeholderText">
-           <string notr="true">Tempo inicial</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="numeroCarga_4">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-left-radius: 10px;
-color: rgb(43, 43, 43);
-background-color: rgb(177, 177, 177);
-</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="webTotalParams" native="true">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>160</y>
-        <width>211</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <widget class="QWidget" name="verticalLayoutWidget_16">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>211</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
          <widget class="QLabel" name="label_34">
           <property name="maximumSize">
@@ -2280,7 +2239,7 @@ background-color: rgb(177, 177, 177);
           <property name="font">
            <font>
             <family>DejaVu Sans</family>
-            <pointsize>12</pointsize>
+            <pointsize>11</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
@@ -2289,12 +2248,12 @@ background-color: rgb(177, 177, 177);
            <string notr="true">color: rgb(245, 245, 245);</string>
           </property>
           <property name="text">
-           <string>WEB</string>
+           <string>Fim</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="tempoInicialWEB">
+         <widget class="QTextEdit" name="tempoFinalTotal">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -2320,25 +2279,7 @@ border-radius: 3px;
            <set>Qt::ImhDigitsOnly</set>
           </property>
           <property name="placeholderText">
-           <string notr="true">Tempo Inicial</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="numeroCarga_3">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-left-radius: 10px;
-color: rgb(43, 43, 43);
-background-color: rgb(177, 177, 177);
-</string>
+           <string notr="true">Tempo Final</string>
           </property>
          </widget>
         </item>
@@ -2506,9 +2447,9 @@ background-color: rgb(177, 177, 177);
      <widget class="QWidget" name="widget" native="true">
       <property name="geometry">
        <rect>
-        <x>520</x>
-        <y>450</y>
-        <width>651</width>
+        <x>480</x>
+        <y>470</y>
+        <width>701</width>
         <height>121</height>
        </rect>
       </property>
@@ -2517,329 +2458,396 @@ background-color: rgb(177, 177, 177);
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>651</width>
-         <height>41</height>
+         <width>701</width>
+         <height>121</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QLabel" name="label_42">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245);</string>
-          </property>
-          <property name="text">
-           <string>Total</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QLabel" name="label_47">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_48">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>DejaVu Sans Mono</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>Porcentagem</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_35">
+            <property name="font">
+             <font>
+              <family>DejaVu Sans Mono</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>Bytes</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_41">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245);</string>
-          </property>
-          <property name="text">
-           <string>VoIP</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_42">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245);</string>
+            </property>
+            <property name="text">
+             <string>Total</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="percentTotal">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="bytesTotal">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_43">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245);</string>
-          </property>
-          <property name="text">
-           <string>VoD</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QLabel" name="label_41">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245);</string>
+            </property>
+            <property name="text">
+             <string>VoIP</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="percentVoip">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="byteVoip">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_44">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245);</string>
-          </property>
-          <property name="text">
-           <string>Web</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QLabel" name="label_43">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245);</string>
+            </property>
+            <property name="text">
+             <string>VoD</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="percentVoD">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="bytesVoD">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_45">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>12</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245);</string>
-          </property>
-          <property name="text">
-           <string>IOT</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="horizontalLayoutWidget_2">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>40</y>
-         <width>651</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLabel" name="percentTotal">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="percentVoip">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <item>
+           <widget class="QLabel" name="label_44">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245);</string>
+            </property>
+            <property name="text">
+             <string>Web</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="percentWeb">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="bytesWeb">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QLabel" name="percentVoD">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="percentWeb">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="percentIOT">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="horizontalLayoutWidget_3">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>80</y>
-         <width>651</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="bytesTotal">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="byteVoip">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="bytesVoD">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="bytesWeb">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="bytesIOT">
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(245,245,245)</string>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_12">
+          <item>
+           <widget class="QLabel" name="label_45">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245);</string>
+            </property>
+            <property name="text">
+             <string>IOT</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="percentIOT">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="bytesIOT">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(245,245,245)</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
