@@ -31,37 +31,34 @@ def video_stream_analyser(escala, chargeNumber = 0):
 
 # TODO
 def video_stream_total_analyser(pointsToPlot, placeToPlot, numeroDeCargas: int, initTime: int, endTime:int):
-    
-    try:
-        time_between_segments = []
-        video_codecs = 0.0
-        segmentTime = 0
-        initTime = 0
-        totalVideo = 0
-        data = None
-        with open('./Charges/stream_charge.json') as videoChargeJsonFile:
-            data = json.load(videoChargeJsonFile)
-            videoChargeJsonFile.close()
-        for charge in data:
-            time_between_segments = charge['time_between_segments']
-            init_time = int(charge['init_time'] // 60)
-            # Mudar esse nome
-            # time_downloading = data[chargeNumber]['time_downloading']
-            video_codecs = charge['video_codification']
-            segmentTime = charge['segment_time']
-            getSummedCharge(time_between_segments)
+    time_between_segments = []
+    initTime = 0
+    totalVideo = 0
+    for j in range(numeroDeCargas):
+        try:
+            with open('./Charges/stream_charge{}.json'.format(j)) as videoChargeJsonFile:
+                charge = json.load(videoChargeJsonFile)
+                videoChargeJsonFile.close()
+            # for charge in data:
+                time_between_segments = charge['time_between_packets']
+                getSummedCharge(time_between_segments)
+                init_time = charge['init_time']
+                # Mudar esse nome
+                packet_size = charge['packet_size']
 
-            time_between_segments = [int(x/60) for x in time_between_segments]
-            for val in time_between_segments:
-                if val+init_time >= len(pointsToPlot):
-                    break
-                pointsToPlot[val+init_time] += video_codecs * segmentTime
-                totalVideo += video_codecs * segmentTime
-        placeToPlot.setText(str(int(totalVideo)))
+                for t, pkt in zip(time_between_segments, packet_size):
+                    if t + init_time >= len(pointsToPlot):
+                        break
+                    # Possível condicao de corrida
+                    sem.acquire()
+                    pointsToPlot[int(t + init_time)] += pkt
+                    sem.release()
+                    totalVideo += pkt
+            placeToPlot.setText(str(int(totalVideo)))
 
-    except IOError:
-        print('Não há arquivo stream_charge.json no diretório')
-        return
+        except IOError:
+            print('Não há arquivo stream_charge{}.json no diretório'.format(j))
+            return
 
 def voip_analyser(escala, chargeNumber=0):
     packet_size = 0
@@ -123,7 +120,7 @@ def voip_total_analyser(pointsToPlot, placeToPlot, numeroDeCargas: int, initTime
                         index = int(sequenceOfPackets[i] + initTime)
                         if index < len(pointsToPlot) and index >= initTime and index <= endTime:
                             sem.acquire()
-                            pointsToPlot[index-initTime] += packet_size[i]
+                            pointsToPlot[index-int(initTime)] += packet_size[i]
                             sem.release()
                             totalVoip += packet_size[i]
         except IOError:

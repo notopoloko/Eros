@@ -1449,7 +1449,7 @@ class Ui_Gerador(object):
         Gerador.setStatusBar(self.statusbar)
 
         self.retranslateUi(Gerador)
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Gerador)
 
     def retranslateUi(self, Gerador):

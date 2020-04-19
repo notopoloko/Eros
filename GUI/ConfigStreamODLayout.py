@@ -35,6 +35,8 @@ class StreamODLayout(ConfigLayout):
         self.mostraStreamODEstat(pointsToPlot)
 
     def mudaCarga(self, comboIndex):
+        if comboIndex < 0:
+            return
         self.uiMainWindow.escalaStreamOD.setCurrentIndex(1)
         pointsToPlot = video_stream_analyser(1, comboIndex)
         self.mostraStreamODEstat(pointsToPlot)
@@ -51,21 +53,21 @@ class StreamODLayout(ConfigLayout):
         video_codes = [91000, 180000, 469000, 978000, 2058000, 3953000, 9581000, 21373000]
         
         try:
-            numeroCarga = 1
+            self.numeroCargas = 1
             if self.uiMainWindow.numeroCargas.toPlainText() != '':
-                numeroCarga = int(self.uiMainWindow.numeroCargas.toPlainText())
+                self.numeroCargas = int(self.uiMainWindow.numeroCargas.toPlainText())
             video_code = video_codes[ self.uiMainWindow.comboBox_3.currentIndex() ]
             tempoVideo = int(self.uiMainWindow.tempoVideo.toPlainText())
             self.uiMainWindow.tempoVideo.setText('')
             self.uiMainWindow.numeroCargas.setText('')
 
             self.uiMainWindow.numeroCarga.clear()
-            for i in range(numeroCarga):
+            for i in range(self.numeroCargas):
                 self.uiMainWindow.numeroCarga.addItem('Carga ' + str(i))
             self.uiMainWindow.numeroCarga.setCurrentIndex(0)
             self.uiMainWindow.escalaStreamOD.setCurrentIndex(1)
 
-            video_stream_charge(tempoVideo, video_code, numeroCarga, [0.0]*numeroCarga)
+            video_stream_charge(tempoVideo, video_code, self.numeroCargas, [0.0]*self.numeroCargas)
             pointsToPlot = video_stream_analyser(1)
 
             self.uiMainWindow.widget_2.setVisible(True)

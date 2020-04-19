@@ -1,33 +1,180 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <title>EROS-5</title>
 </head>
+
 <body>
     <div class="container">
+        <header class="header">
+            <div class="wraper">
+                <div class="title col-80">
+                    EROS-5
+                </div>
+                <div class="text-20 col-20 text-center">
+                    <a target="_blank" class="no-decoration" href="https://github.com/notopoloko/Eros.git">See on
+                        github</a>
+                </div>
+            </div>
+        </header>
         <div class="row">
             <div class="col-100">
-                <h1>
-                    EROS-5
-                </h1>
                 <h3>
                     Gerador Sintético de carga de trabalho para ambientes 5G
                 </h3>
-                
+
                 <h2>
                     O que é?
                 </h2>
                 <p>
                     EROS-5 é uma ferramenta de geração de carga de trabalho sintético para redes de computadores.
                     O objetivo principal da ferramenta é prover cargas representativas de aplicações reais e facilitar
-                    o processo de geração através do uso de variáveis aleatórias que descrevem o comportamento 
+                    o processo de geração através do uso de variáveis aleatórias que descrevem o comportamento das
+                    aplicações.
                 </p>
+
+                <h2>
+                    Como instalar?
+                </h2>
+                <p>
+                    Este projeto foi criado utilizando Sistema Operacional Ubuntu 18.04. Ele não foi testado em outros SO's
+                    Para instalar, o primeiro passo é clonar o repositório
+                    <pre> git clone https://github.com/notopoloko/Eros.git </pre>
+                    Entre na pasta, crie um ambiente virtual e ative
+                    <pre> python3 -m venv /path/to/new/virtual/environment </pre>
+                    <pre> source /path/to/new/virtual/environment/bin/activate </pre>
+                    Ou instale diretamente na máquina. Em seguida, instale as dependências necessárias
+                    <pre> pip3 install -r requirements.txt </pre>
+                    E rode o programa
+                    <pre> python3 main.py</pre>
+                </p>
+                <h2>
+                    Como utilizar
+                </h2>
+                <p>
+                    O programa apresenta 4 aplicações sendo elas, VoIP, Streaming de vídeo, WEB e IoT. Cada uma foi
+                    modelada utilizando trabalhos conhecidos na área acadêmica se baseando em séries temporais como
+                    mostrado na imagem abaixo.
+                </p>
+                <div class="w-100 text-center">
+                    <img class="w-80" src="./Icons/serieArq.png" alt="">
+                </div>
+                <h3>
+                    1. VoIP
+                </h3>
+                <p>
+                    Na aba VoIP há 3 parâmetros que devem ser passados:
+                </p>
+                <div class="pl-10">
+                    <p>
+                        <strong>CODEC:</strong> CODEC a ser utilizado na geração de tráfego. As opções disponíveis são:
+                    </p>
+                    <ul>
+                        <li>G.729 (CBR: 8kbps)</li>
+                        <li>G.729 (CBR: 6.4kbps)</li>
+                        <li>G.711 A-Law (CBR)</li>
+                        <li>SILK (VBR)</li>
+                        <li>iSAC (VBR)</li>
+                    </ul>
+                    <p>
+                        <strong>Duração:</strong> duração em segundos que cada carga terá.
+                    </p>
+                    <p>
+                        <strong>Número de Cargas: </strong>número de cargas a serem geradas.
+                    </p>
+                    <div class="w-100 text-center">
+                        <img src="./Icons/voip.png" style="width: 60%;">
+                    </div>
+                </div>
+                <h3>
+                    2. Streaming de vídeo
+                </h3>
+
+                <p>Nessa aba há 3 parâmetros a serem passados</p>
+                <div class="pl-10">
+                    <p>
+                        <strong>Codificação de vídeo:</strong> codificação média (kbps) de vídeo a ser utilizada.
+                    </p>
+                    <p>
+                        <strong>Tempo de vídeo:</strong> duração em segundos de cada carga.
+                    </p>
+                    <p>
+                        <strong>Número de cargas:</strong> Número de cargas a serem geradas.
+                    </p>
+                </div>
+                <div class="w-100 text-center">
+                    <img src="./Icons/streaming_video.png" style="width: 60%;">
+                </div>
+                <h3>
+                    3. WEB
+                </h3>
+
+                <p>Aqui só são necessários 2 parâmtros:</p>
+                <div class="pl-10">
+                    <p>
+                        <strong>Tempo da carga: </strong>duração em segundos de cada carga.
+                    </p>
+                    <p>
+                        <strong>Numero de cargas a serem geradas: </strong>número de cargas a serem geradas.
+                    </p>
+                </div>
+
+                <div class="w-100 text-center">
+                    <img src="./Icons/web.png" style="width: 60%;">
+                </div>
+                <h3>
+                    4. IOT
+                </h3>
+                <p>
+                    A geração de tráfego IOT precisa de 5 parâmtros:
+                </p>
+                <div class="pl-10">
+                    <p>
+                        <strong>Número de dispositivos: </strong>número de dispositivos que estão transmitindo mensagens.
+                    </p>
+                    <p>
+                        <strong>Tamanho da mensagem: </strong>tamanho das mensagens em bytes (M).
+                    </p>
+                    <p>
+                        <strong>Período individual de transmissão:</strong> período no qual um único dispositivo vai transmitir uma mensagem (T). A cada T segundos,
+                        uma mensagem de tamanho (M) será transmitida por um único dispositivo.
+                    </p>
+                    <p>
+                        <strong>Tempo total:</strong> tempo total da carga.
+                    </p>
+                    <p>
+                        <strong>Número de cargas:</strong> número de cargas a serem geradas.
+                    </p>
+                </div>
+                <div class="w-100 text-center">
+                    <img src="./Icons/iot.png" style="width: 60%;">
+                </div>
+                <h3>
+                    5. Total
+                </h3>
+                <div class="pl-10">
+                    <p>
+                        <strong>Tempo inicial: </strong>tempo inicial do agregado das cargas geradas a serem analisadas.
+                    </p>
+                    <p>
+                        <strong>Tempo final: </strong>tempo final do agregado das cargas geradas a serem analisadas
+                    </p>
+                </div>
+                <div class="w-100 text-center">
+                    <img src="./Icons/total.png" style="width: 60%;">
+                </div>
+
+                <h2>
+                    Video Explicativo
+                </h2>
+                <a href=""></a>
             </div>
         </div>
     </div>
 </body>
+
 </html>

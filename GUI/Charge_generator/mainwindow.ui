@@ -71,7 +71,7 @@ color: rgb(238, 238, 236);</string>
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <property name="contextMenuPolicy">
