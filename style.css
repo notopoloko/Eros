@@ -81,3 +81,7 @@ body {
 .bold {
    font-weight: bold;
 }
+
+.pb-20 {
+   padding-bottom: 50px;
+}
