@@ -1,0 +1,5 @@
+numpy
+matplotlib
+hurst
+pyqt5==5.13.0
+scipy
