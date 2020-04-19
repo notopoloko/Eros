@@ -1526,7 +1526,7 @@ class Ui_Gerador(object):
         self.label_46.setText(_translate("Gerador", "Número de Cargas"))
         self.escalaIOT.setItemText(0, _translate("Gerador", "Segundos"))
         self.escalaIOT.setItemText(1, _translate("Gerador", "Minutos"))
-        self.pushButtonIOT.setText(_translate("Gerador", "Gerar tráfego para o NS3"))
+        self.pushButtonIOT.setText(_translate("Gerador", "Gerar tráfego"))
         self.label_24.setText(_translate("Gerador", "Análise estatística"))
         self.label_25.setText(_translate("Gerador", "Média"))
         self.mediaViewIOT.setText(_translate("Gerador", "TextLabel"))

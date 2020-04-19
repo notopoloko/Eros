@@ -169,6 +169,26 @@
                 </div>
 
                 <h2>
+                    Saída do gerador
+                </h2>
+                <p>
+                    A saída do gerador está no formato json e se encontra na pasta 'Charges'. Após o processo de geração, cada carga estará com
+                    o nome &lt;nome_aplicacao&gt;_charge&lt;numero_carga&gt;.json. Cada json possui campos que descrevem a carga segundo a modelagem apropriada:
+                </p>
+                <p>
+                    <strong>init_time: </strong>Instante de início da carga em segundos (float).
+                </p>
+                <p>
+                    <strong>server_port: </strong>Porta de destino das mensagens.
+                </p>
+                <p>
+                    <strong>packet_size: </strong>Tamanho das mensagens a serem transmitidas. Podem ser de tamanho fixo ou variável (int | list).
+                </p>
+
+                <p>
+                    <strong>time_between_packets: </strong>Tempo entre duas transmissões consecutivas em segundos (list&lt;float&gt;)
+                </p>
+                <h2>
                     Video Explicativo
                 </h2>
                 <a href=""></a>

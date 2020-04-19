@@ -61,14 +61,15 @@ class StreamODLayout(ConfigLayout):
             self.uiMainWindow.tempoVideo.setText('')
             self.uiMainWindow.numeroCargas.setText('')
 
-            self.uiMainWindow.numeroCarga.clear()
-            for i in range(self.numeroCargas):
-                self.uiMainWindow.numeroCarga.addItem('Carga ' + str(i))
             self.uiMainWindow.numeroCarga.setCurrentIndex(0)
             self.uiMainWindow.escalaStreamOD.setCurrentIndex(1)
 
             video_stream_charge(tempoVideo, video_code, self.numeroCargas, [0.0]*self.numeroCargas)
             pointsToPlot = video_stream_analyser(1)
+
+            self.uiMainWindow.numeroCarga.clear()
+            for i in range(self.numeroCargas):
+                self.uiMainWindow.numeroCarga.addItem('Carga ' + str(i))
 
             self.uiMainWindow.widget_2.setVisible(True)
             self.plotOnCanvas( self.uiMainWindow.streamPlotLayout, pointsToPlot, 'Plot Vídeo Sob Demanda', xLabel=xLabel[self.uiMainWindow.numeroCarga.currentIndex()])
